@@ -4,6 +4,8 @@ import hashlib
 
 MEMORY_FILE = "council_memory.json"
 
+
+# Add your own models here
 MODELS = {
     "leader": "llama2-uncensored:7b",
     "analyst": "nous-hermes2:latest",
@@ -101,6 +103,9 @@ def run_council(user_prompt):
     # Update memory with summary
     summary_prompt = f"Summarize key points concisely from council outputs and leader response: MAX 2-3 sentences no more than that\n{council_outputs}\nLeader: {leader_out}"
     summary = run_llm("leader", summary_prompt)
+
+
+    # Could be better
     
     tag_prompt = f"""
     Extract ONLY 2-4 short topic tags from the text below.
@@ -110,11 +115,13 @@ def run_council(user_prompt):
     - No numbering
     - No sentences
     - No explanations
-    - Example format: astronomy, planets, methane, atmosphere
+    - Example format: astronomy, planets, methane, atmosphere        
 
     Text:
     {summary}
     """
+   
+    
 
     tags_raw = run_llm("leader", tag_prompt)
 
